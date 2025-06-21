@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const path = require('path');
 
 // Define routes
-let index = require('./routes/index');
+let index = require('./routes/index')
 let image = require('./routes/image');
 
 // connecting the database

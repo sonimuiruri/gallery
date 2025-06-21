@@ -1,35 +1,10 @@
 var config = {}
 
 // Update to have your correct username and password
-config.mongoURI = {mongodb+srv://winfreymuiruri:<Muth0n11>@cluster1.tuta9pl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster1
-const { MongoClient, ServerApiVersion } = require('mongodb');
-const uri = "mongodb+srv://winfreymuiruri:<Muth0n11>@cluster1.tuta9pl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster1";
+config.mongoURI = {
+    production: 'mongodb+srv://winfreymuiruri:Muth0n11@gallery.wc344.mongodb.net/darkroom?retryWrites=true&w=majority',
+    development: 'mongodb+srv://winfreymuiruri:Muth0n11@gallery.wc344.mongodb.net/darkroom-dev?retryWrites=true&w=majority',
+    test: 'mongodb+srv://winfreymuiruri:Muth0n11@gallery.wc344.mongodb.net/darkroom-test?retryWrites=true&w=majority',
+};
 
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
-const client = new MongoClient(uri, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
-  }
-});
-
-async function run() {
-  try {
-    // Connect the client to the server	(optional starting in v4.7)
-    await client.connect();
-    // Send a ping to confirm a successful connection
-    await client.db("admin").command({ ping: 1 });
-    console.log("Pinged your deployment. You successfully connected to MongoDB!");
-  } finally {
-    // Ensures that the client will close when you finish/error
-    await client.close();
-  }
-}
-run().catch(console.dir);
-
-    production: 'mongodb+srv://<USERNAME>:<PASSWORD>@gallery.wc344.mongodb.net/darkroom?retryWrites=true&w=majority',
-    development: 'mongodb+srv://<USERNAME>:<PASSWORD>@gallery.wc344.mongodb.net/darkroom-dev?retryWrites=true&w=majority',
-    test: 'mongodb+srv://<USERNAME>:<PASSWORD>@gallery.wc344.mongodb.net/darkroom-test?retryWrites=true&w=majority',
-}
 module.exports = config;
