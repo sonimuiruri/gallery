@@ -18,4 +18,4 @@ mongoose.connect(config.mongoURI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
-.then(() => console.log('✅ Database connect
+.then(() => console.log('✅ Database connected successfully'))
