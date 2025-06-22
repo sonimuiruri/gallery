@@ -1,10 +1,5 @@
-var config = {}
+var config = {};
 
-// Update to have your correct username and password
-config.mongoURI = {
-    production: 'mongodb+srv://winfreymuiruri:Muth0n11@gallery.wc344.mongodb.net/darkroom?retryWrites=true&w=majority',
-    development: 'mongodb+srv://winfreymuiruri:Muth0n11@gallery.wc344.mongodb.net/darkroom-dev?retryWrites=true&w=majority',
-    test: 'mongodb+srv://winfreymuiruri:Muth0n11@gallery.wc344.mongodb.net/darkroom-test?retryWrites=true&w=majority',
-};
+config.mongoURI = process.env.MONGO_URI || 'mongodb://localhost:27017/darkroom';
 
 module.exports = config;
