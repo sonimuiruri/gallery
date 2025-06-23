@@ -9,10 +9,9 @@ let index = require('./routes/index');
 let image = require('./routes/image');
 
 // Get the full connection string from the environment
-const mongodb_url = process.env.MONGO_URI; // this must be set in Render dashboard
-const dbName = '/winfreymuiruri'; // optional, if not already in the connection string
+const mongodb_url = process.env.MONGO_URI;
 
-mongoose.connect(`${mongodb_url}${dbName}`, {
+mongoose.connect(mongodb_url, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 }, (err) => {
