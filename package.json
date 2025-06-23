@@ -4,8 +4,10 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "mocha --exit"
-  },
+  "start": "node server.js",
+  "test": "mocha --exit"
+}
+
   "keywords": [],
   "author": "",
   "license": "ISC",
