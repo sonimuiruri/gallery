@@ -9,20 +9,23 @@ let index = require('./routes/index');
 let image = require('./routes/image');
 
 // Connect to the database
-mongoose.connect(process.env.MONGO_URI, {
+const mongoose = require('mongoose');
+
+// Get the full connection string from the environment
+const mongodb_url = process.env.MONGO_URI; // this must be set in Render dashboard
+const dbName = '/winfreymuiruri'; // optional, if not already in the connection string
+
+mongoose.connect(`${mongodb_url}${dbName}`, {
   useNewUrlParser: true,
-  useUnifiedTopology: true,
+  useUnifiedTopology: true
+}, (err) => {
+  if (err) {
+    console.error('Failed to connect to MongoDB:', err);
+  } else {
+    console.log('Connected to MongoDB successfully');
+  }
 });
 
-let dbName = 'darkroom';
-mongoose.connect(`${mongodb_url}${dbName}`, { useNewUrlParser: true, useUnifiedTopology: true }, (err) => {
-    if (err) console.log(err);
-});
-
-let db = mongoose.connection;
-db.once('open', () => {
-    console.log('Database connected successfully');
-});
 
 // Initialize the app
 const app = express();
