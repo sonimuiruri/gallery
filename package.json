@@ -1,13 +1,13 @@
 {
+ {
   "name": "dark-room",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
   "scripts": {
-  "start": "node server.js",
-  "test": "mocha --exit"
-}
-
+    "start": "node server.js",
+    "test": "mocha --exit"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -26,4 +26,6 @@
     "chai-http": "^1.0.0",
     "mocha": "^8.4.0"
   }
+}
+
 }
