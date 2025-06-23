@@ -8,9 +8,6 @@ const path = require('path');
 let index = require('./routes/index');
 let image = require('./routes/image');
 
-// Connect to the database
-const mongoose = require('mongoose');
-
 // Get the full connection string from the environment
 const mongodb_url = process.env.MONGO_URI; // this must be set in Render dashboard
 const dbName = '/winfreymuiruri'; // optional, if not already in the connection string
@@ -25,7 +22,6 @@ mongoose.connect(`${mongodb_url}${dbName}`, {
     console.log('Connected to MongoDB successfully');
   }
 });
-
 
 // Initialize the app
 const app = express();
@@ -53,4 +49,3 @@ if (require.main === module) {
         console.log(`Server is listening at http://localhost:${PORT}`);
     });
 }
-
