@@ -2,24 +2,24 @@ pipeline {
     agent any
 
     tools {
-        nodejs 'NodeJS'
+        nodejs "NodeJS"
     }
 
     environment {
-        RENDER_DEPLOY_URL = 'https://gallery-q49o.onrender.com'
+        RENDER_DEPLOY_URL = "https://gallery-q49o.onrender.com"
     }
 
     
     stages {
-        stage('install Dependencies') {
+        stage("install Dependencies") {
             steps {
-                sh 'npm install'
+                sh "npm install"
             }
         }
         
-        stage('Test') {
+        stage("Test") {
             steps {
-                sh 'npm test'
+                sh "npm test"
             }
         }
     }
