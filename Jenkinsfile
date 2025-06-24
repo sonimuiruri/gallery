@@ -7,17 +7,16 @@ pipeline {
 
     environment {
         RENDER_DEPLOY_URL = "https://gallery-q49o.onrender.com"
-         MONGO_URI = credentials('mongo-uri')
+        MONGO_URI = credentials('mongo-uri')
     }
 
-    
     stages {
-        stage("install Dependencies") {
+        stage("Install Dependencies") {
             steps {
                 sh "npm install"
             }
         }
-        
+
         stage("Test") {
             steps {
                 sh "npm test"
@@ -28,18 +27,17 @@ pipeline {
     post {
         always {
             script {
-                def slackMessageColor
-        def slackMessageText
+                def buildStatus = currentBuild.result ?: 'SUCCESS'
+                def slackMessageColor = (buildStatus == 'SUCCESS') ? '#36a64f' : '#ff0000'
+                def slackMessageText = (buildStatus == 'SUCCESS') ?
+                    "*Build succeeded:* <${env.BUILD_URL}|${env.JOB_NAME} #${env.BUILD_NUMBER}>.\nDeployed to: <${env.RENDER_DEPLOY_URL}|Render Gallery>" :
+                    "*Build failed:* <${env.BUILD_URL}|${env.JOB_NAME} #${env.BUILD_NUMBER}>"
 
-        if (currentBuild.result == 'SUCCESS') {
-        	slackMessageColor = '#36a64f' // Green
-        	slackMessageText = "Build succeeded: <${env.BUILD_URL}|${env.JOB_NAME} #${env.BUILD_NUMBER}>. Deployed to <${RENDER_BASE_URL}|Render Gallery>"
-        } else {
-        	slackMessageColor = '#ff0000' // Red
-        	slackMessageText = "Build failed: <${env.BUILD_URL}|${env.JOB_NAME} #${env.BUILD_NUMBER}>"
-        }
-
-        slackSend(color: slackMessageColor, message: slackMessageText)
+                slackSend(
+                    color: slackMessageColor,
+                    message: slackMessageText
+                    // webhookUrl: credentials('slack-webhook-url') // Uncomment if needed
+                )
             }
         }
     }
