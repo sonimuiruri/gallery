@@ -7,6 +7,7 @@ pipeline {
 
     environment {
         RENDER_DEPLOY_URL = "https://gallery-q49o.onrender.com"
+         MONGO_URI = credentials('mongo-uri')
     }
 
     
