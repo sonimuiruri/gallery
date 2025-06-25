@@ -5,40 +5,46 @@ pipeline {
         nodejs "NodeJS"
     }
 
-    environment {
-        RENDER_DEPLOY_URL = "https://gallery-q49o.onrender.com"
-        MONGO_URI = credentials('mongo-uri')
-    }
-
     stages {
-        stage("Install Dependencies") {
+        stage('Clone Repository') {
             steps {
-                sh "npm install"
+                git branch: 'master', url: 'https://github.com/sonimuiruri/gallery.git'
             }
         }
-
-        stage("Test") {
+        stage('Initial Dependencies') {
             steps {
-                sh "npm test"
+                sh 'npm install'
             }
         }
-    }
-
-    post {
-        always {
-            script {
-                def buildStatus = currentBuild.result ?: 'SUCCESS'
-                def slackMessageColor = (buildStatus == 'SUCCESS') ? '#36a64f' : '#ff0000'
-                def slackMessageText = (buildStatus == 'SUCCESS') ?
-                    "*Build succeeded:* <${env.BUILD_URL}|${env.JOB_NAME} #${env.BUILD_NUMBER}>.\nDeployed to: <${env.RENDER_DEPLOY_URL}|Render Gallery>" :
-                    "*Build failed:* <${env.BUILD_URL}|${env.JOB_NAME} #${env.BUILD_NUMBER}>"
-
-                slackSend(
-                    color: slackMessageColor,
-                    message: slackMessageText
-                    // webhookUrl: credentials('slack-webhook-url') // Uncomment if needed
-                )
+        stage('Run Tests') {
+            steps {
+                sh 'npm test'
+            }
+            post {
+                failure {
+                    emailext (
+                        subject: "Test Failed: ${env.JOB_NAME} - ${env.BUILD_NUMBER}",
+                        body: "Tests failed in build ${env.BUILD_NUMBER}. Check console at ${env.BUILD_URL}",
+                        to: "winfrey.muiruri@student.moringaschool.com"
+                    )
+                }
+            }
+        }
+        stage('Deploy to Render') {
+            steps {
+                echo 'Deployment triggered automatically via GitHub push to Render'
+                echo 'App URL: gallery-q49o.onrender.com'
+            }
+            post {
+                success {
+                    slackSend (
+                        channel: '#winfrey_ip1',
+                        message: "🎉 Great news! Build #${env.BUILD_ID} was deployed successfully. Check it out here: https://gallery-q49o.onrender.com"
+                    )
+                }
             }
         }
     }
 }
+
+       
