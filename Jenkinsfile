@@ -39,10 +39,19 @@ pipeline {
                 success {
                     slackSend (
                         channel: '#winfrey_ip1',
+                        color: 'good',
                         message: "🎉 Great news! Build #${env.BUILD_ID} was deployed successfully. Check it out here: https://gallery-q49o.onrender.com"
                     )
                 }
             }
+        }
+    }
+    post {
+        success {
+            echo 'Pipeline completed successfully!'
+        }
+        failure {
+            echo 'Pipeline failed!'
         }
     }
 }
